@@ -34,6 +34,8 @@
     version: "20190102",
   };
 
+  const ApiKey =  "czxyAeSyhSBcCliKkhdaSIDBaidYIBff"
+
   $(document).ready(function () {
     // uncomment for test
     // test;
@@ -42,6 +44,8 @@
       tableau.connectionName = "Kontakt.io Data";
       tableau.submit();
     });
+    
+
   });
 
   function getVenueLikesURI(accessToken) {
@@ -52,6 +56,50 @@
       config.version
     );
   }
+  async function getVenueLikesURI(accessToken) {
+  var xhr = $.ajax({
+    type: "GET",
+    url: `https://apps-api.test.kontakt.io/v2/organization/account/authenticate`,
+    data: "username=HsGIFGeWstDcAVy%40test.kontakt.io&password=YOUR_PASSWORD",
+    dataType: "application/x-www-form-urlencoded",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    success: function (data) {
+      
+      console.log(data);
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      // WDC should do more granular error checking here
+      // or on the server side.  This is just a sample of new API.
+      console.log("No Bueano")
+      // tableau.abortForAuth("Invalid Access Token");
+    },
+  });
+  }
+
+  async function getOcc() {
+  var xhr = $.ajax({
+    url: `https://apps-api.test.kontakt.io/v3/occupancy?page=0&size=2&sort=roomId&startTime=2021-11-17T15:46:35.321Z&endTime=2021-11-17T15:49:55.321Z`,
+    dataType: "json",
+    headers: {
+      "Content-Type": "application/json",
+      "Api-Key": ApiKey,
+    },
+    success: function (data) {
+      
+      console.log("Succses");
+      console.log(data)
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      // WDC should do more granular error checking here
+      // or on the server side.  This is just a sample of new API.
+      console.log("Succses");
+      tableau.abortForAuth("Invalid Access Token");
+    },
+  });
+}
+
 
   //------------- Tableau WDC code -------------//
   // Create tableau connector, should be called first
@@ -134,11 +182,11 @@
     // branch to table
     if (table.tableInfo.id == "Buildings") {
       var xhr = $.ajax({
-        url: `https://apps.cloud.us.kontakt.io/v2/locations/buildings?page=0&size=50&sort=name`,
+        url: `https://apps-api.test.kontakt/v2/locations/buildings?page=0&size=50&sort=name`,
         dataType: "json",
         headers: {
           "Content-Type": "application/json",
-          "Api-Key": "ilcGMcUsxAQEUWGHZPHiCTCqVafdMfFx",
+          "Api-Key": ApiKey,
         },
         success: function (data) {
           
@@ -168,7 +216,7 @@
         dataType: "json",
         headers: {
           "Content-Type": "application/json",
-          "Api-Key": "ilcGMcUsxAQEUWGHZPHiCTCqVafdMfFx",
+          "Api-Key": ApiKey,
         },
         success: function (data) {
           
