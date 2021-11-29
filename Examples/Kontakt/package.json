@@ -1,8 +1,8 @@
 {
   "name": "tableau-wdc-foursquare",
-  "description": "This is a sample Tableau Web Data Connector for the Foursquare API",
+  "description": "This is a sample Tableau Web Data Connector for the Kontakt.io API",
   "version": "0.0.1",
-  "author": "YOUR_NAME_HERE",
+  "author": "Tzur Almog",
   "contributors": [],
   "license": "MIT",
   "repository": "",
@@ -22,4 +22,6 @@
   "scripts": {
     "start": "node app.js"
   }
+
+  
 }
