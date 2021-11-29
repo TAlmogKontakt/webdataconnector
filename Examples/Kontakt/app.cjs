@@ -7,8 +7,16 @@ var querystring = require('querystring');
 var http = require('http');
 var request = require('request');
 var path = require('path');
-var config = require('./config.js');              // Get our config info (app id and app secret)
+var config = require('./config.cjs');              // Get our config info (app id and app secret)
 var sys = require('util');
+// import express from "express";
+// import cookieParser from "cookieParser";
+// import querystring from "querystring";
+// import http from "http";
+// import request from "request";
+// import path from "path";
+// import config from "./config.js";
+// import sys from "util";
 
 var app = express();
 

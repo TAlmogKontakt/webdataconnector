@@ -8,6 +8,7 @@
   "repository": "",
   "homepage": "",
   "keywords": [],
+  "type": "module",
   "dependencies": {
     "express": "~4.13.*",
     "request": ">=2.68.0",
@@ -20,7 +21,7 @@
   },
   "files": [],
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.cjs"
   }
 
   

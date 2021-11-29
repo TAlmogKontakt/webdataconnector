@@ -1,4 +1,4 @@
-(function() {
+
     // Create the connector object
     var myConnector = tableau.makeConnector();
 
@@ -59,4 +59,4 @@
             tableau.submit(); // This sends the connector object to Tableau
         });
     });
-})();
+
