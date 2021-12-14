@@ -41,17 +41,17 @@ import { API } from "./Extras/fetchAPI.js";
 
 
   const ApiKey = "czxyAeSyhSBcCliKkhdaSIDBaidYIBff";
+  const millisecondsPerSecond = 1000, secondsPerMinute = 60, minutesPerHour = 60, hoursPerDay = 24, daysToRead = 10;
 
-  var sensorRoomIDs = [2542254, 2444734];
 
   $(document).ready(function () {
     // uncomment for test
     // test;
-    // $("#getbuildingsbutton").click(function () {
+    $("#getbuildingsbutton").click(function () {
 
-    //   tableau.connectionName = "Kontakt.io Data";
-    //   tableau.submit();
-    // });
+      tableau.connectionName = "Kontakt.io Data";
+      tableau.submit();
+    });
 
     // var getter = new API(ApiKey);
 
@@ -62,20 +62,58 @@ import { API } from "./Extras/fetchAPI.js";
 
     // 2021-11-17T08:09:04.222Z	
     // 2021-11-17T08:14:04.222Z	
+    // const millisecondsPerSecond = 1000, secondsPerMinute = 60, minutesPerHour = 60, hoursPerDay = 24 , daysToRead = 10;
     // var today=new Date();  
-    // console.log(today.toISOString());
-    // today.setMinutes(0);
-    // console.log(today.toISOString());
-    // var trial1 = new Date("2021-11-17T08:09:04.222Z");
-    // var trial2 = new Date("2021-11-17T08:14:04.222Z");
-    // console.log("trial1 = " + trial1);
-    // console.log("trial2 = " + trial2);
-    // for (let index =new Date("2021-11-17T08:09:04.222Z"); index < trial2; index++) {
-    //   console.log(index);
+    // console.log(today);
+    // today.setTime(today.getTime() - daysToRead * hoursPerDay * minutesPerHour * secondsPerMinute * millisecondsPerSecond);
+    // console.log(today);
 
-    // }
-    tableau.connectionName = "Kontakt.io Data";
-      tableau.submit();
+
+    // var url = "https://testapi.kontakt.io/manager/authenticate";
+    // // var url = "https://apps-api.test.kontakt.io/manager/authenticate";
+
+    
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("POST", url);
+
+    // xhr.setRequestHeader("Accept", "application/vnd.com.kontakt+json;version=10");
+    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+    // // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+    // // res.header("Access-Control-Allow-Origin", "*");
+
+    // xhr.onreadystatechange = function () {
+    //   // if (xhr.readyState === 4) {
+    //     console.log(xhr.status);
+    //     console.log(xhr.responseText);
+    //   // }
+    // };
+
+    // var data = "email=pawel@kontakt.io&password=KiITB2020";
+
+    // xhr.send(data);
+  //   var xhr = $.ajax({
+  //     url: `https://testapi.kontakt.io/manager/authenticate`,
+  //     data: "email=pawel@kontakt.io&password=KiITB2020",
+  //     method: "POST",
+  //     dataType: 'jsonp',
+  //     crossDomain :"True",
+  //     headers: {
+  //       "Accept": "application/vnd.com.kontakt+json;version=10",
+  //       "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+  //     },
+  //     success: function (data) {
+
+  //       console.log("Succses");
+  //       console.log(data)
+  //     },
+  //     error: function (xhr, ajaxOptions, thrownError) {
+
+  //       console.log("Error \n" + thrownError);
+  //     },
+  //   });
+
 
   });
 
@@ -294,9 +332,10 @@ import { API } from "./Extras/fetchAPI.js";
       var today = new Date();
       // console.log(today.toISOString());
 
-      const startTime = "2021-11-25T08:00:00.000000Z"; //changed to shorten dat fragments
-      // const endTime = "2021-11-17T20:00:00.000000Z";
+
       const endTime = today.toISOString();
+      today.setTime(today.getTime() - daysToRead * hoursPerDay * minutesPerHour * secondsPerMinute * millisecondsPerSecond);
+      const startTime = today.toISOString(); //changed to shorten dat fragments
       // sensorRoomIDs.forEach
 
       // console.log(getOccupancyFunctionList.dataType);
