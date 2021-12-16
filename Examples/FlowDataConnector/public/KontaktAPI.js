@@ -49,11 +49,11 @@ import { API } from "./Extras/fetchAPI.js";
     // test;
     $("#getbuildingsbutton").click(function () {
 
-      tableau.connectionName = "Kontakt.io Data";
+      tableau.connectionName = "Kontakt.ioFlowData";
       tableau.submit();
     });
 
-    var getter = new API(ApiKey);
+    // var getter = new API(ApiKey);
 
     // getter.test();
     // getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/rooms?page=0&size=10&sort=name").then(function (data) {
@@ -72,7 +72,7 @@ import { API } from "./Extras/fetchAPI.js";
     // var url = "https://testapi.kontakt.io/manager/authenticate";
     // // var url = "https://apps-api.test.kontakt.io/manager/authenticate";
 
-
+    
 
     // var xhr = new XMLHttpRequest();
     // xhr.open("POST", url);
@@ -97,8 +97,8 @@ import { API } from "./Extras/fetchAPI.js";
     //   url: `https://testapi.kontakt.io/manager/authenticate`,
     //   data: "email=pawel@kontakt.io&password=KiITB2020",
     //   method: "POST",
-    //   dataType: 'json',
-    //   crossDomain: "True",
+    //   dataType: 'jsonp',
+    //   crossDomain :"True",
     //   headers: {
     //     "Accept": "application/vnd.com.kontakt+json;version=10",
     //     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
@@ -113,21 +113,6 @@ import { API } from "./Extras/fetchAPI.js";
     //     console.log("Error \n" + thrownError);
     //   },
     // });
-    // var form = new URLSearchParams();
-    // form.append('email', 'pawel@kontakt.io');
-    // form.append('password', 'KiITB2020');
-    // window.fetch('https://testapi.kontakt.io/manager/authenticate', { method: 'POST', headers: { 'Accept': 'application/vnd.com.kontakt+json;version=10' }, body: form, mode: 'no-cors' })
-    // .then(data => console.log(data));
-    // .then(
-    //   (data) => {
-
-    //       console.log("Succses");
-    //       console.log(data)
-    //     });
-    getter.postData('https://testapi.kontakt.io/manager/authenticate', { email:"pawel@kontakt.io", password: "KiITB2020"})
-  .then(data => {
-    console.log(data); // JSON data parsed by `data.json()` call
-  });
 
 
   });
@@ -222,18 +207,18 @@ import { API } from "./Extras/fetchAPI.js";
         id: "RoomId",
         dataType: tableau.dataTypeEnum.float,
       },
-      // {
-      //   id: "StartTime",
-      //   dataType: tableau.dataTypeEnum.datetime,
-      // },
-      // {
-      //   id: "EndTime",
-      //   dataType: tableau.dataTypeEnum.datetime,
-      // },
       {
-        id: "Time",
+        id: "StartTime",
         dataType: tableau.dataTypeEnum.datetime,
       },
+      {
+        id: "EndTime",
+        dataType: tableau.dataTypeEnum.datetime,
+      },
+      // {
+      //   id: "Time",
+      //   dataType: tableau.dataTypeEnum.datetime,
+      // },
       {
         id: "Occupancy",
         dataType: tableau.dataTypeEnum.float,
@@ -393,26 +378,13 @@ import { API } from "./Extras/fetchAPI.js";
             const array = data.content;
             var max = 0;
             for (let index = 0; index < array.length; index++) {
-              var startTime = new Date(array[index].startTime).getTime();
-              var endTime = new Date(array[index].endTime).getTime();
-              // console.log("trial1 = " + trial1);
-              // console.log("trial2 = " + trial2);
-              // for (let index =new Date("2021-11-17T08:09:04.222Z"); index < trial2; index++) {
-              //   console.log(index);
 
-              // }
-              // var startTime = trial1.getTime(), endTime = trial2.getTime();
-              for (let loopTime = startTime; loopTime < endTime; loopTime += 60000) {
-                var loopMinute = new Date(loopTime);
-                // console.log(loopMinute);
                 var venue = {
                   RoomId: array[index].roomId,
                   Occupancy: array[index].occupancy,
-                  Time: loopMinute,
-                  // StartTime: array[index].startTime,
+                  StartTime: array[index].startTime,
 
-                  // EndTime: array[index].endTime,
-                  // Location: array[index].latLngGeojson,
+                  EndTime: array[index].endTime,
 
                 };
                 // console.log("roomID = " + roomID + " and pageNum = " + pageNum);
@@ -423,7 +395,7 @@ import { API } from "./Extras/fetchAPI.js";
               }
 
 
-            }
+            
             table.appendRows(dataToReturn);
             // console.log(data);
             // console.log("roomID = " + roomID + " and pageNum = " + pageNum + " Max occ = " + max);
