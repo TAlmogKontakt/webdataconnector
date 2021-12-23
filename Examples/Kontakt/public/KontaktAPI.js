@@ -1,5 +1,6 @@
 import { API } from "./Extras/fetchAPI.js";
-(function () {
+import { KontaktResponseObject as RespObjt  } from "./Extras/KontaktResponseObject.js";
+(async function () {
   "use strict";
   // import HelloWorld from "./components/HelloWorld.vue";
 
@@ -43,94 +44,46 @@ import { API } from "./Extras/fetchAPI.js";
   const ApiKey = "czxyAeSyhSBcCliKkhdaSIDBaidYIBff";
   const millisecondsPerSecond = 1000, secondsPerMinute = 60, minutesPerHour = 60, hoursPerDay = 24, daysToRead = 10;
 
-
   $(document).ready(function () {
-    // uncomment for test
-    // test;
-    $("#getbuildingsbutton").click(function () {
+  //  Start of ready code
+    $("#getbuildingsbutton").click(async function () {
 
       tableau.connectionName = "Kontakt.io Data";
       tableau.submit();
     });
 
     var getter = new API(ApiKey);
-
-    // getter.test();
-    // getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/rooms?page=0&size=10&sort=name").then(function (data) {
-    //   console.log(data);
+    // getter.test().then( data => {
+    //   var x  = new RespObjt(data);
+      console.log( "Hello?")
     // });
-
-    // 2021-11-17T08:09:04.222Z	
-    // 2021-11-17T08:14:04.222Z	
-    // const millisecondsPerSecond = 1000, secondsPerMinute = 60, minutesPerHour = 60, hoursPerDay = 24 , daysToRead = 10;
-    // var today=new Date();  
-    // console.log(today);
-    // today.setTime(today.getTime() - daysToRead * hoursPerDay * minutesPerHour * secondsPerMinute * millisecondsPerSecond);
-    // console.log(today);
-
-
-    // var url = "https://testapi.kontakt.io/manager/authenticate";
-    // // var url = "https://apps-api.test.kontakt.io/manager/authenticate";
-
-
-
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", url);
-
-    // xhr.setRequestHeader("Accept", "application/vnd.com.kontakt+json;version=10");
-    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-    // // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-
-    // // res.header("Access-Control-Allow-Origin", "*");
-
-    // xhr.onreadystatechange = function () {
-    //   // if (xhr.readyState === 4) {
-    //     console.log(xhr.status);
-    //     console.log(xhr.responseText);
-    //   // }
-    // };
-
-    // var data = "email=pawel@kontakt.io&password=KiITB2020";
-
-    // xhr.send(data);
-    // var xhr = $.ajax({
-    //   url: `https://testapi.kontakt.io/manager/authenticate`,
-    //   data: "email=pawel@kontakt.io&password=KiITB2020",
-    //   method: "POST",
-    //   dataType: 'json',
-    //   crossDomain: "True",
-    //   headers: {
-    //     "Accept": "application/vnd.com.kontakt+json;version=10",
-    //     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-    //   },
-    //   success: function (data) {
-
-    //     console.log("Succses");
-    //     console.log(data)
-    //   },
-    //   error: function (xhr, ajaxOptions, thrownError) {
-
-    //     console.log("Error \n" + thrownError);
-    //   },
+    let data = await getter.basicGet("https://apps-api.test.kontakt.io/v3/occupancy/room-attributes/history?roomId=2444734");
+    var x  = new RespObjt(data, ApiKey);
+    //   // console.log("Mark 1");
+    //   // x.getAllPageURLs();
+     
+    //   // console.log( x.links[0].href);
+    //   // var y = [];
+    //   // x.returnData(x.links[0].href,y );
+      let y =  await x.getAllData();
+      console.log(y);
+    // fetch("https://apps-api.test.kontakt.io/v3/occupancy/room-attributes/history?roomId=2444734", {
+    //   "method": "GET",
+    //   "headers": {
+    //     "Content-Type": "application/json",
+    //     "Api-Key": ApiKey
+    //   }
+    // })
+    // .then(response => {
+    //   console.log(response.json().then(data => {
+    //           console.log(data);
+    //         }));
+    // })
+    // .catch(err => {
+    //   console.error(err);
     // });
-    // var form = new URLSearchParams();
-    // form.append('email', 'pawel@kontakt.io');
-    // form.append('password', 'KiITB2020');
-    // window.fetch('https://testapi.kontakt.io/manager/authenticate', { method: 'POST', headers: { 'Accept': 'application/vnd.com.kontakt+json;version=10' }, body: form, mode: 'no-cors' })
-    // .then(data => console.log(data));
-    // .then(
-    //   (data) => {
-
-    //       console.log("Succses");
-    //       console.log(data)
-    //     });
-    getter.postData('https://testapi.kontakt.io/manager/authenticate', { email:"pawel@kontakt.io", password: "KiITB2020"})
-  .then(data => {
-    console.log(data); // JSON data parsed by `data.json()` call
   });
 
-
-  });
 
   // todo
   // async function setSensorRoomIDs() {}
@@ -178,10 +131,6 @@ import { API } from "./Extras/fetchAPI.js";
         id: "Name",
         dataType: tableau.dataTypeEnum.string,
       },
-      // {
-      //   id: "Location",
-      //   dataType: tableau.dataTypeEnum.geometry,
-      // },
     ];
 
     var tableInfo = {
@@ -222,14 +171,6 @@ import { API } from "./Extras/fetchAPI.js";
         id: "RoomId",
         dataType: tableau.dataTypeEnum.float,
       },
-      // {
-      //   id: "StartTime",
-      //   dataType: tableau.dataTypeEnum.datetime,
-      // },
-      // {
-      //   id: "EndTime",
-      //   dataType: tableau.dataTypeEnum.datetime,
-      // },
       {
         id: "Time",
         dataType: tableau.dataTypeEnum.datetime,
@@ -237,11 +178,33 @@ import { API } from "./Extras/fetchAPI.js";
       {
         id: "Occupancy",
         dataType: tableau.dataTypeEnum.float,
-      },
+      }
     ];
 
     var tableInfo = {
       id: "Occupancy",
+      columns: cols,
+    };
+
+    schema.push(tableInfo);
+
+    var cols = [
+      {
+        id: "RoomId",
+        dataType: tableau.dataTypeEnum.float,
+      },
+      {
+        id: "Time",
+        dataType: tableau.dataTypeEnum.datetime,
+      },
+      {
+        id: "Occupancy",
+        dataType: tableau.dataTypeEnum.float,
+      }
+    ];
+
+    var tableInfo = {
+      id: "Seats",
       columns: cols,
     };
 
@@ -269,6 +232,28 @@ import { API } from "./Extras/fetchAPI.js";
 
     schema.push(tableInfo);
 
+    cols = [
+      {
+        id: "Id",
+        dataType: tableau.dataTypeEnum.float,
+      },
+      {
+        id: "Name",
+        dataType: tableau.dataTypeEnum.string,
+      },
+      {
+        id: "RoomId",
+        dataType: tableau.dataTypeEnum.float,
+      },
+    ];
+
+    var tableInfo = {
+      id: "Spaces",
+      columns: cols,
+    };
+
+    schema.push(tableInfo);
+
     schemaCallback(schema);
   };
 
@@ -277,14 +262,18 @@ import { API } from "./Extras/fetchAPI.js";
   myConnector.getData = async function (table, doneCallback) {
     // begining
     var dataToReturn = [];
+    // sets up time variables
+    var today = new Date();
+      const endTime = today.toISOString();
+      today.setTime(today.getTime() - daysToRead * hoursPerDay * minutesPerHour * secondsPerMinute * millisecondsPerSecond);
+      const startTime = today.toISOString(); 
 
     // var hasMoreData = false;
 
     // var accessToken = tableau.password;\
     // branch to table
     var getter = new API(ApiKey);
-    if (table.tableInfo.id == "Buildings") {
-
+    if (table.tableInfo.id == "Buildings") { // Uses API endpoint to get building information directly
       getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/buildings?page=0&size=50&sort=name").then(function (data) {
         const array = data.content;
         for (let index = 0; index < array.length; index++) {
@@ -300,7 +289,7 @@ import { API } from "./Extras/fetchAPI.js";
         doneCallback();
       });
 
-    } else if (table.tableInfo.id == "Floors") {
+    } else if (table.tableInfo.id == "Floors") { // Uses API endpoint to get floor information directly
       getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/floors?page=0&size=50&sort=name").then(function (data) {
         const array = data.content;
         for (let index = 0; index < array.length; index++) {
@@ -317,8 +306,8 @@ import { API } from "./Extras/fetchAPI.js";
         doneCallback();
       });
 
-    } else if (table.tableInfo.id == "Rooms") {
-      getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/rooms?page=0&size=10&sort=name").then(function (data) {
+    } else if (table.tableInfo.id == "Rooms") { // Uses API endpoint to get room information directly
+      getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/rooms?page=0&size=50&sort=name").then(function (data) {
         const array = data.content;
         for (let index = 0; index < array.length; index++) {
           var venue = {
@@ -335,7 +324,28 @@ import { API } from "./Extras/fetchAPI.js";
       });
 
 
-    } else if (table.tableInfo.id == "Occupancy") {
+
+    } else if (table.tableInfo.id == "Spaces") { // Uses API endpoint to get building information directly
+
+      getter.basicGet("https://apps-api.test.kontakt.io/v2/locations/spaces?sort=name&page=0").then(function (data) {
+        const array = data.content;
+        for (let index = 0; index < array.length; index++) {
+          for (let jndex = 0; jndex < array[index].roomIds.length; jndex++) {
+          var venue = {
+            Id: array[index].id,
+            RoomId: array[index].roomIds[jndex],
+            Name: array[index].name,
+          };
+          dataToReturn.push(venue);
+        }
+        }
+        table.appendRows(dataToReturn);
+        console.log(data);
+        doneCallback();
+      });
+
+    } else if (table.tableInfo.id == "Occupancy") { // Gets occupancy information
+      // gets list of room ids
       var allRoomIds = [];
       await getter.getRoomIds().then((data) => {
         var x = data.content;
@@ -343,43 +353,19 @@ import { API } from "./Extras/fetchAPI.js";
           allRoomIds.push(element.id);
         });
       });
-      // var sensorRoomIDs = [2542254, 2444734];
-      var today = new Date();
-      // console.log(today.toISOString());
 
+      
 
-      const endTime = today.toISOString();
-      today.setTime(today.getTime() - daysToRead * hoursPerDay * minutesPerHour * secondsPerMinute * millisecondsPerSecond);
-      const startTime = today.toISOString(); //changed to shorten dat fragments
-      // sensorRoomIDs.forEach
-
-      // console.log(getOccupancyFunctionList.dataType);
-
-      // console.log(table.tableInfo.id);
-      // console.log("Test")
-      // console.log(sensorRoomIDs[0]);
+    //  gets total pages for each room
       var roomPages = [];
-      // await allRoomIds.forEach(element => {
-      //   getAPIPages(`https://apps-api.test.kontakt.io/v3/occupancy?page=0&size=20&sort=roomId&startTime=${startTime}&endTime=${endTime}&roomId=${element}`, (data) => {
-      //     roomPages.push( data.page.totalPages);
-      // })
-      // });
       for (let index = 0; index < allRoomIds.length; index++) {
         await getAPIPages(`https://apps-api.test.kontakt.io/v3/occupancy?page=0&size=20&sort=roomId&startTime=${startTime}&endTime=${endTime}&roomId=${allRoomIds[index]}`, (data) => {
           roomPages.push(data.page.totalPages);
         })
       }
       console.log(" x = " + roomPages);
-      // var roomOnePages = 0, roomTwoPages = 0;
-      // await getAPIPages(`https://apps-api.test.kontakt.io/v3/occupancy?page=0&size=20&sort=roomId&startTime=${startTime}&endTime=${endTime}&roomId=${sensorRoomIDs[0]}`, (data) => {
-      //   roomOnePages = data.page.totalPages;
-      // })
-      // await getAPIPages(`https://apps-api.test.kontakt.io/v3/occupancy?page=0&size=20&sort=roomId&startTime=${startTime}&endTime=${endTime}&roomId=${sensorRoomIDs[1]}`, (data) => {
-      //   roomTwoPages = data.page.totalPages;
-      // })
-      // console.log(roomOnePages);
-      // console.log(roomTwoPages);
 
+// API call to get data given room id and page number
       const xhr = async function (roomID, pageNum) {
         return $.ajax({
           url: `https://apps-api.test.kontakt.io/v3/occupancy?page=${pageNum}&size=20&sort=roomId&startTime=${startTime}&endTime=${endTime}&roomId=${roomID}`,
@@ -438,52 +424,29 @@ import { API } from "./Extras/fetchAPI.js";
           },
         });
       };
+
+
+      // gets data for tableau
       var getOccupancyFunctionList = [];
-      getOccupancyFunctionList.push();
-
-
-      // todo fix prefred
-      // console.log("getOccupancyFunctionList:")
-      // getOccupancyFunctionList.forEach((item) => {
-      //   console.log(item.name);
-      //   // item();
-      // })
       for (let index = 0; index < allRoomIds.length; index++) {
+        // logs room number
         console.log("Room number = " + allRoomIds[index]);
         for (let jndex = 0; jndex < roomPages[index]; jndex++) {
-
-          // var x = await xhr(allRoomIds[index], jndex);
+          // gathers all async calls in one place
           getOccupancyFunctionList.push(xhr(allRoomIds[index], jndex));
-          // console.log( xhr(allRoomIds[index], jndex));
         }
 
       }
+      // waits until all async calls are finished
       await Promise.all(getOccupancyFunctionList);
       console.log("Finished occupancy");
-      // console.log("Ahh:")
-      // for (let index = 0; index < roomOnePages; index++) {
 
-      //   await xhr(sensorRoomIDs[0], index);
-      // }
-      // console.log("Ahh2:")
-      // for (let index = 0; index < roomTwoPages; index++) {
-
-      //   await xhr(sensorRoomIDs[1], index);
-      // }
       doneCallback();
 
-      // $.when(getOccupancyFunctionList, xhr2()).done(function () {
-      //   doneCallback();
-      // });
-      // Promise.all().then(() => {
-      //   doneCallback();
-      // }).catch(() => {
-      //   // all requests finished but one or more failed
-      // })
 
-      // $.when(...getOccupancyFunctionList, xhr2()).done(function () {
-      //   doneCallback();
-      // });
+    }else if (table.tableInfo.id == "Seats") {
+
+
 
     }
 
