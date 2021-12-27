@@ -52,21 +52,21 @@ import { KontaktResponseObject as RespObjt  } from "./Extras/KontaktResponseObje
       tableau.submit();
     });
 
-    var getter = new API(ApiKey);
-    // getter.test().then( data => {
-    //   var x  = new RespObjt(data);
-      console.log( "Hello?")
-    // });
-    let data = await getter.basicGet("https://apps-api.test.kontakt.io/v3/occupancy/room-attributes/history?roomId=2444734");
-    var x  = new RespObjt(data, ApiKey);
-    //   // console.log("Mark 1");
-    //   // x.getAllPageURLs();
+    // var getter = new API(ApiKey);
+    // // getter.test().then( data => {
+    // //   var x  = new RespObjt(data);
+    //   console.log( "Hello?")
+    // // });
+    // let data = await getter.basicGet("https://apps-api.test.kontakt.io/v3/occupancy/room-attributes/history?roomId=2444734");
+    // var x  = new RespObjt(data, ApiKey);
+    // //   // console.log("Mark 1");
+    // //   // x.getAllPageURLs();
      
-    //   // console.log( x.links[0].href);
-    //   // var y = [];
-    //   // x.returnData(x.links[0].href,y );
-      let y =  await x.getAllData();
-      console.log(y);
+    // //   // console.log( x.links[0].href);
+    // //   // var y = [];
+    // //   // x.returnData(x.links[0].href,y );
+    //   let y =  await x.getAllData();
+    //   console.log(y);
     // fetch("https://apps-api.test.kontakt.io/v3/occupancy/room-attributes/history?roomId=2444734", {
     //   "method": "GET",
     //   "headers": {
