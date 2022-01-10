@@ -52,11 +52,12 @@ import { KontaktResponseObject as RespObjt  } from "./Extras/KontaktResponseObje
       tableau.submit();
     });
 
-    // var getter = new API(ApiKey);
-    // // getter.test().then( data => {
-    // //   var x  = new RespObjt(data);
-    //   console.log( "Hello?")
-    // // });
+    var getter = new API("NQVvpnDkzQXfIZXOnLUtdJkgMEypDoHo");
+    getter.test().then( data => {
+      var x  = new RespObjt(data);
+      console.log( "Hello?")
+      console.log( x.content)
+    });
     // let data = await getter.basicGet("https://apps-api.test.kontakt.io/v3/occupancy/room-attributes/history?roomId=2444734");
     // var x  = new RespObjt(data, ApiKey);
     // //   // console.log("Mark 1");
